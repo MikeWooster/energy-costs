@@ -1,0 +1,8 @@
+[
+  {
+    "name": "web",
+    "image": "nginx",
+    "memory": 100,
+    "cpu": 99
+  }
+]
