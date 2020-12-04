@@ -23,8 +23,8 @@ resource "aws_internet_gateway" "main" {
 resource "aws_subnet" "public_az1" {
   depends_on = [aws_vpc.main]
 
-  vpc_id     = aws_vpc.main.id
-  cidr_block = "10.1.0.0/24"
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.1.0.0/24"
   availability_zone = "eu-west-1a"
 
   tags = {
@@ -34,9 +34,9 @@ resource "aws_subnet" "public_az1" {
 
 resource "aws_subnet" "public_az2" {
   depends_on = [aws_vpc.main]
-  
-  vpc_id     = aws_vpc.main.id
-  cidr_block = "10.1.1.0/24"
+
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.1.1.0/24"
   availability_zone = "eu-west-1b"
 
   tags = {
@@ -46,9 +46,9 @@ resource "aws_subnet" "public_az2" {
 
 resource "aws_subnet" "public_az3" {
   depends_on = [aws_vpc.main]
-  
-  vpc_id     = aws_vpc.main.id
-  cidr_block = "10.1.2.0/24"
+
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.1.2.0/24"
   availability_zone = "eu-west-1c"
 
   tags = {
@@ -59,8 +59,8 @@ resource "aws_subnet" "public_az3" {
 resource "aws_subnet" "app_az1" {
   depends_on = [aws_vpc.main]
 
-  vpc_id     = aws_vpc.main.id
-  cidr_block = "10.1.3.0/24"
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.1.3.0/24"
   availability_zone = "eu-west-1a"
 
   tags = {
@@ -70,9 +70,9 @@ resource "aws_subnet" "app_az1" {
 
 resource "aws_subnet" "app_az2" {
   depends_on = [aws_vpc.main]
-  
-  vpc_id     = aws_vpc.main.id
-  cidr_block = "10.1.4.0/24"
+
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.1.4.0/24"
   availability_zone = "eu-west-1b"
 
   tags = {
@@ -82,9 +82,9 @@ resource "aws_subnet" "app_az2" {
 
 resource "aws_subnet" "app_az3" {
   depends_on = [aws_vpc.main]
-  
-  vpc_id     = aws_vpc.main.id
-  cidr_block = "10.1.5.0/24"
+
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.1.5.0/24"
   availability_zone = "eu-west-1c"
 
   tags = {
@@ -95,8 +95,8 @@ resource "aws_subnet" "app_az3" {
 resource "aws_subnet" "db_az1" {
   depends_on = [aws_vpc.main]
 
-  vpc_id     = aws_vpc.main.id
-  cidr_block = "10.1.6.0/24"
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.1.6.0/24"
   availability_zone = "eu-west-1a"
 
   tags = {
@@ -106,9 +106,9 @@ resource "aws_subnet" "db_az1" {
 
 resource "aws_subnet" "db_az2" {
   depends_on = [aws_vpc.main]
-  
-  vpc_id     = aws_vpc.main.id
-  cidr_block = "10.1.7.0/24"
+
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.1.7.0/24"
   availability_zone = "eu-west-1b"
 
   tags = {
@@ -118,9 +118,9 @@ resource "aws_subnet" "db_az2" {
 
 resource "aws_subnet" "db_az3" {
   depends_on = [aws_vpc.main]
-  
-  vpc_id     = aws_vpc.main.id
-  cidr_block = "10.1.8.0/24"
+
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.1.8.0/24"
   availability_zone = "eu-west-1c"
 
   tags = {
