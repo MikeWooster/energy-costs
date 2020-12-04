@@ -1,7 +1,7 @@
 [
   {
     "name": "web",
-    "image": "nginx",
+    "image": "${image_url}:${image_tag}",
     "memory": 100,
     "cpu": 99
   }
