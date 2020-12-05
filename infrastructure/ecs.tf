@@ -74,7 +74,7 @@ resource "aws_ecs_service" "webservers" {
   cluster         = aws_ecs_cluster.main.id
   task_definition = aws_ecs_task_definition.webservers.arn
   launch_type     = "FARGATE"
-  desired_count   = 1
+  desired_count   = 0
 
   network_configuration {
     subnets          = [aws_subnet.public_az1.id, aws_subnet.public_az2.id, aws_subnet.public_az3.id]
