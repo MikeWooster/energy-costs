@@ -10,5 +10,5 @@ RUN go build -o /go/bin/app
 # Use a distroless image to save space
 FROM gcr.io/distroless/base
 COPY --from=build /go/bin/app /
-EXPOSE 8080
+EXPOSE 80
 CMD ["/app"]
