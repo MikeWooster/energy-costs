@@ -65,6 +65,7 @@ resource "aws_ecs_service" "webservers" {
     aws_ecs_cluster.main,
     aws_ecs_task_definition.webservers,
     aws_security_group.web_traffic,
+    aws_lb_listener.alb,
     aws_subnet.public_az1,
     aws_subnet.public_az2,
     aws_subnet.public_az3,
@@ -74,11 +75,17 @@ resource "aws_ecs_service" "webservers" {
   cluster         = aws_ecs_cluster.main.id
   task_definition = aws_ecs_task_definition.webservers.arn
   launch_type     = "FARGATE"
-  desired_count   = 0
+  desired_count   = 2
 
   network_configuration {
     subnets          = [aws_subnet.public_az1.id, aws_subnet.public_az2.id, aws_subnet.public_az3.id]
     assign_public_ip = true
     security_groups  = [aws_security_group.web_traffic.id]
+  }
+
+  load_balancer {
+    target_group_arn = aws_lb_target_group.main.arn
+    container_name   = "web"
+    container_port   = 80
   }
 }
