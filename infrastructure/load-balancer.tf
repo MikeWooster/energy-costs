@@ -1,6 +1,10 @@
+# ---------------------------------------------------------------------------------------------------------------------
+# Load Balancing
+# ---------------------------------------------------------------------------------------------------------------------
+
 resource "aws_lb" "alb" {
   depends_on = [
-    aws_security_group.web_traffic,
+    aws_security_group.public,
     aws_subnet.public_az1,
     aws_subnet.public_az2,
     aws_subnet.public_az3
@@ -9,7 +13,7 @@ resource "aws_lb" "alb" {
   name               = "mikes-alb"
   internal           = false
   load_balancer_type = "application"
-  security_groups    = [aws_security_group.web_traffic.id]
+  security_groups    = [aws_security_group.public.id]
   subnets            = [aws_subnet.public_az1.id, aws_subnet.public_az2.id, aws_subnet.public_az3.id]
 
   tags = {
@@ -26,6 +30,13 @@ resource "aws_lb_target_group" "main" {
   protocol    = "HTTP"
   target_type = "ip"
   vpc_id      = aws_vpc.main.id
+
+  health_check {
+    enabled  = true
+    interval = 30
+    path     = "/health"
+    port     = "traffic-port"
+  }
 
   tags = {
     Name      = "mikes-target-group"
