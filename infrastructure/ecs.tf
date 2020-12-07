@@ -83,7 +83,7 @@ resource "aws_ecs_service" "webservers" {
   # Explicitly set the version, otherwise future apply's might change this.
   platform_version                  = "1.4.0"
   desired_count                     = 1
-  health_check_grace_period_seconds = 60
+  health_check_grace_period_seconds = 10
 
   network_configuration {
     subnets          = [aws_subnet.app_az1.id, aws_subnet.app_az2.id, aws_subnet.app_az3.id]
@@ -95,5 +95,10 @@ resource "aws_ecs_service" "webservers" {
     target_group_arn = aws_lb_target_group.main.arn
     container_name   = "web"
     container_port   = 8080
+  }
+
+  tags = {
+    Name      = "mikes-webservers"
+    CreatedBy = "Mike"
   }
 }
