@@ -39,6 +39,9 @@ resource "aws_ecs_task_definition" "webservers" {
     aws_iam_role.task_role,
     aws_iam_role.execution_role,
     aws_ecr_repository.main,
+    aws_vpc_endpoint.ecr_api,
+    aws_vpc_endpoint.ecr,
+    aws_vpc_endpoint.s3
   ]
 
   family = "mikes-webservers"
