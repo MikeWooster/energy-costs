@@ -1,3 +1,6 @@
+# ---------------------------------------------------------------------------------------------------------------------
+# ECS Service & Task
+# ---------------------------------------------------------------------------------------------------------------------
 
 data "aws_iam_policy_document" "ecs_task_assume_role_policy" {
   statement {
@@ -64,7 +67,9 @@ resource "aws_ecs_service" "webservers" {
   depends_on = [
     aws_ecs_cluster.main,
     aws_ecs_task_definition.webservers,
-    aws_security_group.web_traffic,
+    aws_security_group.public,
+    # specifying the alb here as this has a dep on the target
+    # group and needs to exist before registering targets
     aws_lb_listener.alb,
     aws_subnet.public_az1,
     aws_subnet.public_az2,
@@ -75,17 +80,20 @@ resource "aws_ecs_service" "webservers" {
   cluster         = aws_ecs_cluster.main.id
   task_definition = aws_ecs_task_definition.webservers.arn
   launch_type     = "FARGATE"
-  desired_count   = 2
+  # Explicitly set the version, otherwise future apply's might change this.
+  platform_version                  = "1.4.0"
+  desired_count                     = 1
+  health_check_grace_period_seconds = 60
 
   network_configuration {
-    subnets          = [aws_subnet.public_az1.id, aws_subnet.public_az2.id, aws_subnet.public_az3.id]
-    assign_public_ip = true
-    security_groups  = [aws_security_group.web_traffic.id]
+    subnets          = [aws_subnet.app_az1.id, aws_subnet.app_az2.id, aws_subnet.app_az3.id]
+    assign_public_ip = false
+    security_groups  = [aws_security_group.private_app.id]
   }
 
   load_balancer {
     target_group_arn = aws_lb_target_group.main.arn
     container_name   = "web"
-    container_port   = 80
+    container_port   = 8080
   }
 }
