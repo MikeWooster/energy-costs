@@ -100,6 +100,11 @@ resource "aws_ecs_service" "webservers" {
     container_port   = 8080
   }
 
+  # Ensure that future applies don't alter the autoscaled count.
+  lifecycle {
+    ignore_changes = [desired_count]
+  }
+
   tags = {
     Name      = "mikes-webservers"
     CreatedBy = "Mike"
