@@ -4,6 +4,7 @@ resource "aws_default_security_group" "default" {
 
   vpc_id = aws_vpc.main.id
 
+  # Allow ingress only from within the vpc network.
   ingress {
     protocol    = "-1"
     self        = true
@@ -12,6 +13,7 @@ resource "aws_default_security_group" "default" {
     cidr_blocks = [aws_vpc.main.cidr_block]
   }
 
+  # Allow all egress.
   egress {
     from_port   = 0
     to_port     = 0
