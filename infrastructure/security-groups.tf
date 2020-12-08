@@ -77,6 +77,14 @@ resource "aws_security_group" "private_app" {
     security_groups = [aws_security_group.public.id]
   }
 
+  egress {
+    description = "Allow all egress traffic"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   tags = {
     Name      = "mikes-application-sg"
     CreatedBy = "Mike"
