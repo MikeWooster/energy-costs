@@ -1,4 +1,6 @@
 resource "aws_appautoscaling_target" "webservers" {
+  depends_on = [aws_ecs_service.webservers]
+
   min_capacity       = 1
   max_capacity       = 4
   resource_id        = "service/${aws_ecs_cluster.main.name}/${aws_ecs_service.webservers.name}"
@@ -38,7 +40,10 @@ resource "aws_appautoscaling_scheduled_action" "webservers_scale_in" {
   }
 }
 
+# Autoscaling policy to stop service exceeding 75% CPU utilization.
 resource "aws_appautoscaling_policy" "maintain_webservers" {
+  depends_on = [aws_appautoscaling_target.webservers]
+
   name               = "mikes-maintain-webservers-policy"
   policy_type        = "TargetTrackingScaling"
   resource_id        = aws_appautoscaling_target.webservers.resource_id
