@@ -21,10 +21,9 @@ resource "aws_default_security_group" "default" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = {
-    Name      = "mikes-default-sg"
-    CreatedBy = "Mike"
-  }
+  tags = merge(local.common_tags, {
+    Name = "mikes-default-sg"
+  })
 }
 
 resource "aws_security_group" "public" {
@@ -58,10 +57,9 @@ resource "aws_security_group" "public" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = {
-    Name      = "mikes-web-traffic-sg"
-    CreatedBy = "Mike"
-  }
+  tags = merge(local.common_tags, {
+    Name = "mikes-web-traffic-sg"
+  })
 }
 
 resource "aws_security_group" "private_app" {
@@ -87,8 +85,7 @@ resource "aws_security_group" "private_app" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = {
-    Name      = "mikes-application-sg"
-    CreatedBy = "Mike"
-  }
+  tags = merge(local.common_tags, {
+    Name = "mikes-application-sg"
+  })
 }

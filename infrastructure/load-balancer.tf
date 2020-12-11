@@ -16,10 +16,9 @@ resource "aws_lb" "alb" {
   security_groups    = [aws_security_group.public.id]
   subnets            = [aws_subnet.public_az1.id, aws_subnet.public_az2.id, aws_subnet.public_az3.id]
 
-  tags = {
-    Name      = "mikes-alb"
-    CreatedBy = "Mike"
-  }
+  tags = merge(local.common_tags, {
+    Name = "mikes-alb"
+  })
 }
 
 resource "aws_lb_target_group" "main" {
@@ -38,10 +37,9 @@ resource "aws_lb_target_group" "main" {
     port     = "traffic-port"
   }
 
-  tags = {
-    Name      = "mikes-target-group"
-    CreatedBy = "Mike"
-  }
+  tags = merge(local.common_tags, {
+    Name = "mikes-target-group"
+  })
 }
 
 resource "aws_lb_listener" "alb" {

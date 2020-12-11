@@ -9,9 +9,9 @@ resource "aws_route_table" "public" {
     gateway_id = aws_internet_gateway.main.id
   }
 
-  tags = {
+  tags = merge(local.common_tags, {
     Name = "Mikes Public RT"
-  }
+  })
 }
 
 resource "aws_route_table_association" "public_az1" {
@@ -39,7 +39,7 @@ resource "aws_default_route_table" "default" {
 
   default_route_table_id = aws_vpc.main.default_route_table_id
 
-  tags = {
+  tags = merge(local.common_tags, {
     Name = "Mikes Default RT"
-  }
+  })
 }

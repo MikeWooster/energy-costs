@@ -1,4 +1,15 @@
 
+variable "service" {
+  type = string
+  description = "The name of the service"
+  default = "energycost"
+}
+
+variable "environment" {
+  type = string
+  description = "The environment we are running in"
+  default = "prod"
+}
 
 variable "aws_region" {
   type = string

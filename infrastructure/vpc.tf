@@ -7,9 +7,9 @@ resource "aws_vpc" "main" {
   enable_dns_hostnames = true
   enable_dns_support   = true
 
-  tags = {
+  tags = merge(local.common_tags, {
     Name = "Mikes VPC"
-  }
+  })
 }
 
 resource "aws_internet_gateway" "main" {
@@ -17,9 +17,9 @@ resource "aws_internet_gateway" "main" {
 
   vpc_id = aws_vpc.main.id
 
-  tags = {
+  tags = merge(local.common_tags, {
     Name = "Mikes IGW"
-  }
+  })
 }
 
 resource "aws_subnet" "public_az1" {
@@ -29,9 +29,9 @@ resource "aws_subnet" "public_az1" {
   cidr_block        = "10.1.0.0/24"
   availability_zone = var.az[0]
 
-  tags = {
+  tags = merge(local.common_tags, {
     Name = "Mikes Public Subnet AZ1"
-  }
+  })
 }
 
 resource "aws_subnet" "public_az2" {
@@ -41,9 +41,9 @@ resource "aws_subnet" "public_az2" {
   cidr_block        = "10.1.1.0/24"
   availability_zone = var.az[1]
 
-  tags = {
+  tags = merge(local.common_tags, {
     Name = "Mikes Public Subnet AZ2"
-  }
+  })
 }
 
 resource "aws_subnet" "public_az3" {
@@ -53,9 +53,9 @@ resource "aws_subnet" "public_az3" {
   cidr_block        = "10.1.2.0/24"
   availability_zone = var.az[2]
 
-  tags = {
+  tags = merge(local.common_tags, {
     Name = "Mikes Public Subnet AZ3"
-  }
+  })
 }
 
 resource "aws_subnet" "app_az1" {
@@ -65,9 +65,9 @@ resource "aws_subnet" "app_az1" {
   cidr_block        = "10.1.3.0/24"
   availability_zone = var.az[0]
 
-  tags = {
+  tags = merge(local.common_tags, {
     Name = "Mikes Application Subnet AZ1"
-  }
+  })
 }
 
 resource "aws_subnet" "app_az2" {
@@ -77,9 +77,9 @@ resource "aws_subnet" "app_az2" {
   cidr_block        = "10.1.4.0/24"
   availability_zone = var.az[1]
 
-  tags = {
+  tags = merge(local.common_tags, {
     Name = "Mikes Application Subnet AZ2"
-  }
+  })
 }
 
 resource "aws_subnet" "app_az3" {
@@ -89,9 +89,9 @@ resource "aws_subnet" "app_az3" {
   cidr_block        = "10.1.5.0/24"
   availability_zone = var.az[2]
 
-  tags = {
+  tags = merge(local.common_tags, {
     Name = "Mikes Application Subnet AZ3"
-  }
+  })
 }
 
 resource "aws_subnet" "db_az1" {
@@ -101,9 +101,9 @@ resource "aws_subnet" "db_az1" {
   cidr_block        = "10.1.6.0/24"
   availability_zone = var.az[0]
 
-  tags = {
+  tags = merge(local.common_tags, {
     Name = "Mikes DB Subnet AZ1"
-  }
+  })
 }
 
 resource "aws_subnet" "db_az2" {
@@ -113,9 +113,9 @@ resource "aws_subnet" "db_az2" {
   cidr_block        = "10.1.7.0/24"
   availability_zone = var.az[1]
 
-  tags = {
+  tags = merge(local.common_tags, {
     Name = "Mikes DB Subnet AZ2"
-  }
+  })
 }
 
 resource "aws_subnet" "db_az3" {
@@ -125,7 +125,7 @@ resource "aws_subnet" "db_az3" {
   cidr_block        = "10.1.8.0/24"
   availability_zone = var.az[2]
 
-  tags = {
+  tags = merge(local.common_tags, {
     Name = "Mikes DB Subnet AZ3"
-  }
+  })
 }
