@@ -31,6 +31,7 @@ resource "aws_subnet" "public_az1" {
 
   tags = merge(local.common_tags, {
     Name = "${local.prefix}-public-subnet-az1"
+    Tier = "public"
   })
 }
 
@@ -43,6 +44,7 @@ resource "aws_subnet" "public_az2" {
 
   tags = merge(local.common_tags, {
     Name = "${local.prefix}-public-subnet-az2"
+    Tier = "public"
   })
 }
 
@@ -55,7 +57,17 @@ resource "aws_subnet" "public_az3" {
 
   tags = merge(local.common_tags, {
     Name = "${local.prefix}-public-subnet-az3"
+    Tier = "public"
   })
+}
+
+data "aws_subnet_ids" "public" {
+  depends_on = [aws_subnet.public_az1, aws_subnet.public_az2, aws_subnet.public_az3]
+
+  vpc_id = aws_vpc.main.id
+  tags = {
+    Tier = "public"
+  }
 }
 
 resource "aws_subnet" "app_az1" {
@@ -67,6 +79,7 @@ resource "aws_subnet" "app_az1" {
 
   tags = merge(local.common_tags, {
     Name = "${local.prefix}-app-subnet-az1"
+    Tier = "private-app"
   })
 }
 
@@ -79,6 +92,7 @@ resource "aws_subnet" "app_az2" {
 
   tags = merge(local.common_tags, {
     Name = "${local.prefix}-app-subnet-az2"
+    Tier = "private-app"
   })
 }
 
@@ -91,7 +105,17 @@ resource "aws_subnet" "app_az3" {
 
   tags = merge(local.common_tags, {
     Name = "${local.prefix}-app-subnet-az3"
+    Tier = "private-app"
   })
+}
+
+data "aws_subnet_ids" "private_app" {
+  depends_on = [aws_subnet.app_az1, aws_subnet.app_az2, aws_subnet.app_az3]
+
+  vpc_id = aws_vpc.main.id
+  tags = {
+    Tier = "private-app"
+  }
 }
 
 resource "aws_subnet" "db_az1" {
@@ -103,6 +127,7 @@ resource "aws_subnet" "db_az1" {
 
   tags = merge(local.common_tags, {
     Name = "${local.prefix}-db-subnet-az1"
+    Tier = "private-db"
   })
 }
 
@@ -115,6 +140,7 @@ resource "aws_subnet" "db_az2" {
 
   tags = merge(local.common_tags, {
     Name = "${local.prefix}-db-subnet-az2"
+    Tier = "private-db"
   })
 }
 
@@ -127,5 +153,15 @@ resource "aws_subnet" "db_az3" {
 
   tags = merge(local.common_tags, {
     Name = "${local.prefix}-db-subnet-az3"
+    Tier = "private-db"
   })
+}
+
+data "aws_subnet_ids" "private_db" {
+  depends_on = [aws_subnet.db_az1, aws_subnet.db_az2, aws_subnet.db_az3]
+
+  vpc_id = aws_vpc.main.id
+  tags = {
+    Tier = "private-db"
+  }
 }
