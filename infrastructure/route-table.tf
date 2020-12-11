@@ -15,19 +15,22 @@ resource "aws_route_table" "public" {
 }
 
 resource "aws_route_table_association" "public_az1" {
-  depends_on     = [aws_subnet.public_az1, aws_route_table.public]
+  depends_on = [aws_subnet.public_az1, aws_route_table.public]
+
   subnet_id      = aws_subnet.public_az1.id
   route_table_id = aws_route_table.public.id
 }
 
 resource "aws_route_table_association" "public_az2" {
-  depends_on     = [aws_subnet.public_az2, aws_route_table.public]
+  depends_on = [aws_subnet.public_az2, aws_route_table.public]
+
   subnet_id      = aws_subnet.public_az2.id
   route_table_id = aws_route_table.public.id
 }
 
 resource "aws_route_table_association" "public_az3" {
-  depends_on     = [aws_subnet.public_az3, aws_route_table.public]
+  depends_on = [aws_subnet.public_az3, aws_route_table.public]
+
   subnet_id      = aws_subnet.public_az3.id
   route_table_id = aws_route_table.public.id
 }

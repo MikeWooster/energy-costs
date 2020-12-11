@@ -82,9 +82,7 @@ resource "aws_ecs_service" "webservers" {
     # specifying the alb here as this has a dep on the target
     # group and needs to exist before registering targets
     aws_lb_listener.alb,
-    aws_subnet.public_az1,
-    aws_subnet.public_az2,
-    aws_subnet.public_az3,
+    data.aws_subnet_ids.public
   ]
 
   name            = "${local.prefix}-webservers"

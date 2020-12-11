@@ -5,9 +5,7 @@
 resource "aws_lb" "alb" {
   depends_on = [
     aws_security_group.public,
-    aws_subnet.public_az1,
-    aws_subnet.public_az2,
-    aws_subnet.public_az3
+    data.aws_subnet_ids.public
   ]
 
   name               = "${local.prefix}-alb"

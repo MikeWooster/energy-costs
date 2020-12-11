@@ -6,15 +6,15 @@
 resource "aws_vpc_endpoint" "ecr" {
   depends_on = [
     aws_default_security_group.default,
-    aws_subnet.app_az1,
+    data.aws_subnet_ids.private_app,
   ]
 
   vpc_id            = aws_vpc.main.id
   service_name      = "com.amazonaws.${var.aws_region}.ecr.dkr"
   vpc_endpoint_type = "Interface"
 
-  # cost saving - only putting it in one subnet
-  subnet_ids = [aws_subnet.app_az1.id]
+  # Deploy in all application subnets (for HA)
+  subnet_ids = data.aws_subnet_ids.private_app.ids
 
   security_group_ids = [
     aws_default_security_group.default.id,
@@ -31,14 +31,15 @@ resource "aws_vpc_endpoint" "ecr" {
 resource "aws_vpc_endpoint" "ecr_api" {
   depends_on = [
     aws_default_security_group.default,
-    aws_subnet.app_az1,
+    data.aws_subnet_ids.private_app
   ]
 
   vpc_id            = aws_vpc.main.id
   service_name      = "com.amazonaws.${var.aws_region}.ecr.api"
   vpc_endpoint_type = "Interface"
 
-  subnet_ids = [aws_subnet.app_az1.id]
+  # Deploy in all application subnets (for HA)
+  subnet_ids = data.aws_subnet_ids.private_app.ids
 
   security_group_ids = [
     aws_default_security_group.default.id,
