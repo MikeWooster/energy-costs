@@ -41,6 +41,7 @@ resource "aws_appautoscaling_scheduled_action" "webservers_scale_in" {
 }
 
 # Autoscaling policy to stop service exceeding 75% CPU utilization.
+# This will add/remove tasks to meet the target threshold.
 resource "aws_appautoscaling_policy" "maintain_webservers" {
   depends_on = [aws_appautoscaling_target.webservers]
 

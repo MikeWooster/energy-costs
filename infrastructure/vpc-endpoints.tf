@@ -10,7 +10,7 @@ resource "aws_vpc_endpoint" "ecr" {
   ]
 
   vpc_id            = aws_vpc.main.id
-  service_name      = "com.amazonaws.eu-west-1.ecr.dkr"
+  service_name      = "com.amazonaws.${var.aws_region}.ecr.dkr"
   vpc_endpoint_type = "Interface"
 
   # cost saving - only putting it in one subnet
@@ -36,7 +36,7 @@ resource "aws_vpc_endpoint" "ecr_api" {
   ]
 
   vpc_id            = aws_vpc.main.id
-  service_name      = "com.amazonaws.eu-west-1.ecr.api"
+  service_name      = "com.amazonaws.${var.aws_region}.ecr.api"
   vpc_endpoint_type = "Interface"
 
   subnet_ids = [aws_subnet.app_az1.id]
@@ -58,7 +58,7 @@ resource "aws_vpc_endpoint" "s3" {
   depends_on = [aws_vpc.main]
 
   vpc_id       = aws_vpc.main.id
-  service_name = "com.amazonaws.eu-west-1.s3"
+  service_name = "com.amazonaws.${var.aws_region}.s3"
 
   route_table_ids = [aws_vpc.main.default_route_table_id]
 
