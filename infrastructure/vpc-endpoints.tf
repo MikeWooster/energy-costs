@@ -22,10 +22,9 @@ resource "aws_vpc_endpoint" "ecr" {
 
   private_dns_enabled = true
 
-  tags = {
-    Name      = "mikes-ecr-docker-registry-interface-endpoint"
-    CreatedBy = "Mike"
-  }
+  tags = merge(local.common_tags, {
+    Name = "mikes-ecr-docker-registry-interface-endpoint"
+  })
 }
 
 # Endpoint for the ecr api
@@ -47,10 +46,9 @@ resource "aws_vpc_endpoint" "ecr_api" {
 
   private_dns_enabled = true
 
-  tags = {
-    Name      = "mikes-ecr-api-interface-endpoint"
-    CreatedBy = "Mike"
-  }
+  tags = merge(local.common_tags, {
+    Name = "mikes-ecr-api-interface-endpoint"
+  })
 }
 
 # Endpoint for S3
@@ -62,8 +60,7 @@ resource "aws_vpc_endpoint" "s3" {
 
   route_table_ids = [aws_vpc.main.default_route_table_id]
 
-  tags = {
-    Name      = "mikes-s3-gateway-endpoint"
-    CreatedBy = "Mike"
-  }
+  tags = merge(local.common_tags, {
+    Name = "mikes-s3-gateway-endpoint"
+  })
 }

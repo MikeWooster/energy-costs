@@ -17,6 +17,8 @@ resource "aws_iam_role" "task_role" {
   name               = "mikes-ecs-task-role"
   description        = "Role used as the Task Role in the ECS cluster"
   assume_role_policy = data.aws_iam_policy_document.ecs_task_assume_role_policy.json
+
+  tags = merge(local.common_tags, {})
 }
 
 resource "aws_iam_role" "execution_role" {
