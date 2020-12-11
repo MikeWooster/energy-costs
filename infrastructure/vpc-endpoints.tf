@@ -23,7 +23,7 @@ resource "aws_vpc_endpoint" "ecr" {
   private_dns_enabled = true
 
   tags = merge(local.common_tags, {
-    Name = "mikes-ecr-docker-registry-interface-endpoint"
+    Name = "${local.prefix}-ecr-docker-registry-interface-endpoint"
   })
 }
 
@@ -47,7 +47,7 @@ resource "aws_vpc_endpoint" "ecr_api" {
   private_dns_enabled = true
 
   tags = merge(local.common_tags, {
-    Name = "mikes-ecr-api-interface-endpoint"
+    Name = "${local.prefix}-ecr-api-interface-endpoint"
   })
 }
 
@@ -61,6 +61,6 @@ resource "aws_vpc_endpoint" "s3" {
   route_table_ids = [aws_vpc.main.default_route_table_id]
 
   tags = merge(local.common_tags, {
-    Name = "mikes-s3-gateway-endpoint"
+    Name = "${local.prefix}-s3-gateway-endpoint"
   })
 }
