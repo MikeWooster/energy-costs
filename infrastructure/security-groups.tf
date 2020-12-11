@@ -22,14 +22,14 @@ resource "aws_default_security_group" "default" {
   }
 
   tags = merge(local.common_tags, {
-    Name = "mikes-default-sg"
+    Name = "${local.prefix}-default-sg"
   })
 }
 
 resource "aws_security_group" "public" {
   depends_on = [aws_vpc.main]
 
-  name        = "mikes-public-sg"
+  name        = "${local.prefix}-public-sg"
   description = "Allow HTTP/HTTPS inbound traffic"
   vpc_id      = aws_vpc.main.id
 
@@ -58,14 +58,14 @@ resource "aws_security_group" "public" {
   }
 
   tags = merge(local.common_tags, {
-    Name = "mikes-web-traffic-sg"
+    Name = "${local.prefix}-web-traffic-sg"
   })
 }
 
 resource "aws_security_group" "private_app" {
   depends_on = [aws_vpc.main]
 
-  name        = "mikes-application-sg"
+  name        = "${local.prefix}-app-sg"
   description = "Allow traffic from public security group"
   vpc_id      = aws_vpc.main.id
 
@@ -86,6 +86,6 @@ resource "aws_security_group" "private_app" {
   }
 
   tags = merge(local.common_tags, {
-    Name = "mikes-application-sg"
+    Name = "${local.prefix}-app-sg"
   })
 }

@@ -14,7 +14,7 @@ data "aws_iam_policy_document" "ecs_task_assume_role_policy" {
 }
 
 resource "aws_iam_role" "task_role" {
-  name               = "mikes-ecs-task-role"
+  name               = "${local.prefix}-ecs-task-role"
   description        = "Role used as the Task Role in the ECS cluster"
   assume_role_policy = data.aws_iam_policy_document.ecs_task_assume_role_policy.json
 
@@ -22,9 +22,11 @@ resource "aws_iam_role" "task_role" {
 }
 
 resource "aws_iam_role" "execution_role" {
-  name               = "mikes-ecs-execution-role"
+  name               = "${local.prefix}-ecs-execution-role"
   description        = "Role used as the Execution Role in the ECS cluster"
   assume_role_policy = data.aws_iam_policy_document.ecs_task_assume_role_policy.json
+
+  tags = merge(local.common_tags, {})
 }
 
 data "aws_iam_policy" "AmazonECSTaskExecutionRolePolicy" {
@@ -46,7 +48,7 @@ resource "aws_ecs_task_definition" "webservers" {
     aws_vpc_endpoint.s3
   ]
 
-  family = "mikes-webservers"
+  family = "${local.prefix}-webservers"
   container_definitions = templatefile("task-definitions/webservers.json", {
     image_url = aws_ecr_repository.main.repository_url,
     image_tag = "latest",
@@ -62,10 +64,14 @@ resource "aws_ecs_task_definition" "webservers" {
 
   cpu    = "256"
   memory = "512"
+
+  tags = merge(local.common_tags, {})
 }
 
 resource "aws_ecs_cluster" "main" {
-  name = "mikes-ecs-cluster"
+  name = "${local.prefix}-ecs-cluster"
+
+  tags = merge(local.common_tags, {})
 }
 
 resource "aws_ecs_service" "webservers" {
@@ -81,7 +87,7 @@ resource "aws_ecs_service" "webservers" {
     aws_subnet.public_az3,
   ]
 
-  name            = "mikes-webservers"
+  name            = "${local.prefix}-webservers"
   cluster         = aws_ecs_cluster.main.id
   task_definition = aws_ecs_task_definition.webservers.arn
   launch_type     = "FARGATE"
@@ -107,8 +113,7 @@ resource "aws_ecs_service" "webservers" {
     ignore_changes = [desired_count]
   }
 
-  tags = {
-    Name      = "mikes-webservers"
-    CreatedBy = "Mike"
-  }
+  tags = merge(local.common_tags, {
+    Name = "${local.prefix}-webservers"
+  })
 }

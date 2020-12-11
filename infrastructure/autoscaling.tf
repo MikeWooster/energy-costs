@@ -12,7 +12,7 @@ resource "aws_appautoscaling_target" "webservers" {
 resource "aws_appautoscaling_scheduled_action" "webservers_scale_out" {
   depends_on = [aws_appautoscaling_target.webservers]
 
-  name               = "mikes-scale-out-action"
+  name               = "${local.prefix}-scale-out-action"
   service_namespace  = aws_appautoscaling_target.webservers.service_namespace
   resource_id        = aws_appautoscaling_target.webservers.resource_id
   scalable_dimension = aws_appautoscaling_target.webservers.scalable_dimension
@@ -28,7 +28,7 @@ resource "aws_appautoscaling_scheduled_action" "webservers_scale_out" {
 resource "aws_appautoscaling_scheduled_action" "webservers_scale_in" {
   depends_on = [aws_appautoscaling_target.webservers]
 
-  name               = "mikes-scale-in-action"
+  name               = "${local.prefix}-scale-in-action"
   service_namespace  = aws_appautoscaling_target.webservers.service_namespace
   resource_id        = aws_appautoscaling_target.webservers.resource_id
   scalable_dimension = aws_appautoscaling_target.webservers.scalable_dimension
@@ -45,7 +45,7 @@ resource "aws_appautoscaling_scheduled_action" "webservers_scale_in" {
 resource "aws_appautoscaling_policy" "maintain_webservers" {
   depends_on = [aws_appautoscaling_target.webservers]
 
-  name               = "mikes-maintain-webservers-policy"
+  name               = "${local.prefix}-maintain-webservers-policy"
   policy_type        = "TargetTrackingScaling"
   resource_id        = aws_appautoscaling_target.webservers.resource_id
   scalable_dimension = aws_appautoscaling_target.webservers.scalable_dimension

@@ -3,7 +3,7 @@
 # ---------------------------------------------------------------------------------------------------------------------
 
 resource "aws_ecr_repository" "main" {
-  name                 = "mikes-repo"
+  name                 = var.service
   image_tag_mutability = "MUTABLE"
 
   image_scanning_configuration {

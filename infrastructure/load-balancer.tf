@@ -10,21 +10,21 @@ resource "aws_lb" "alb" {
     aws_subnet.public_az3
   ]
 
-  name               = "mikes-alb"
+  name               = "${local.prefix}-alb"
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.public.id]
   subnets            = [aws_subnet.public_az1.id, aws_subnet.public_az2.id, aws_subnet.public_az3.id]
 
   tags = merge(local.common_tags, {
-    Name = "mikes-alb"
+    Name = "${local.prefix}-alb"
   })
 }
 
 resource "aws_lb_target_group" "main" {
   depends_on = [aws_vpc.main]
 
-  name        = "mikes-target-group"
+  name        = "${local.prefix}-target-group"
   port        = 80
   protocol    = "HTTP"
   target_type = "ip"
@@ -38,7 +38,7 @@ resource "aws_lb_target_group" "main" {
   }
 
   tags = merge(local.common_tags, {
-    Name = "mikes-target-group"
+    Name = "${local.prefix}-target-group"
   })
 }
 

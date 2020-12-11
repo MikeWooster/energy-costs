@@ -10,7 +10,7 @@ resource "aws_route_table" "public" {
   }
 
   tags = merge(local.common_tags, {
-    Name = "Mikes Public RT"
+    Name = "${local.prefix}-public-rt"
   })
 }
 
@@ -33,13 +33,13 @@ resource "aws_route_table_association" "public_az3" {
 }
 
 # Specify the default route table so we have control over it.
-# Unassociated subnets will get associted with this implicitly.
+# Unassociated subnets will get associated with this implicitly.
 resource "aws_default_route_table" "default" {
   depends_on = [aws_vpc.main]
 
   default_route_table_id = aws_vpc.main.default_route_table_id
 
   tags = merge(local.common_tags, {
-    Name = "Mikes Default RT"
+    Name = "${local.prefix}-default-rt"
   })
 }
