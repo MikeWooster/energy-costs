@@ -2,6 +2,11 @@
 
 Service to calculate a users best energy provider.
 
+# Application
+
+A simple hello world app with health check written using Go with
+Gorilla mux for routing requests.
+
 # Dockerfile
 
 The dockerfile has been built in 2 stages. The first to get
